@@ -12,6 +12,13 @@
 #define HAHUDVIEWTAG 666666
 
 
+
+@interface HABlockView : UIView
+- (void)hide;
+@property (nonatomic, copy) void (^completionBlock)(NSUInteger selectedButtonIndex);
+@end
+
+
 @implementation HABlockView
 
 // We create a subclass of UIView to hold the completion block

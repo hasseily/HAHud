@@ -48,9 +48,3 @@
 @property (nonatomic, retain) NSArray *buttons;
 
 @end
-
-
-@interface HABlockView : UIView
-- (void)hide;
-@property (nonatomic, copy) void (^completionBlock)(NSUInteger selectedButtonIndex);
-@end
