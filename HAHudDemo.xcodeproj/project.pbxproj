@@ -21,6 +21,12 @@
 		63D4B78D17E1CB5500B669DF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63D4B76F17E1CB5400B669DF /* UIKit.framework */; };
 		63D4B79517E1CB5500B669DF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 63D4B79317E1CB5500B669DF /* InfoPlist.strings */; };
 		63D4B79717E1CB5500B669DF /* HAHudDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D4B79617E1CB5500B669DF /* HAHudDemoTests.m */; };
+		63D4B7A217E1CC4200B669DF /* HAHud.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D4B7A117E1CC4200B669DF /* HAHud.m */; };
+		63D4B7A717E3141200B669DF /* hud-0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63D4B7A317E3141200B669DF /* hud-0@2x.png */; };
+		63D4B7A817E3141200B669DF /* hud-0.png in Resources */ = {isa = PBXBuildFile; fileRef = 63D4B7A417E3141200B669DF /* hud-0.png */; };
+		63D4B7A917E3141200B669DF /* hud-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 63D4B7A517E3141200B669DF /* hud-1.png */; };
+		63D4B7AA17E3141200B669DF /* hud-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63D4B7A617E3141200B669DF /* hud-1@2x.png */; };
+		63D4B7AD17E4D4E600B669DF /* button_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 63D4B7AC17E4D4E600B669DF /* button_bg.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +59,13 @@
 		63D4B79217E1CB5500B669DF /* HAHudDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HAHudDemoTests-Info.plist"; sourceTree = "<group>"; };
 		63D4B79417E1CB5500B669DF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		63D4B79617E1CB5500B669DF /* HAHudDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HAHudDemoTests.m; sourceTree = "<group>"; };
+		63D4B7A017E1CC4200B669DF /* HAHud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HAHud.h; sourceTree = "<group>"; };
+		63D4B7A117E1CC4200B669DF /* HAHud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HAHud.m; sourceTree = "<group>"; };
+		63D4B7A317E3141200B669DF /* hud-0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hud-0@2x.png"; sourceTree = "<group>"; };
+		63D4B7A417E3141200B669DF /* hud-0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hud-0.png"; sourceTree = "<group>"; };
+		63D4B7A517E3141200B669DF /* hud-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hud-1.png"; sourceTree = "<group>"; };
+		63D4B7A617E3141200B669DF /* hud-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hud-1@2x.png"; sourceTree = "<group>"; };
+		63D4B7AC17E4D4E600B669DF /* button_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_bg.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +130,7 @@
 				63D4B77D17E1CB5500B669DF /* Main.storyboard */,
 				63D4B78017E1CB5500B669DF /* HAHUDViewController.h */,
 				63D4B78117E1CB5500B669DF /* HAHUDViewController.m */,
+				63D4B7AB17E46A3100B669DF /* HAHud */,
 				63D4B78317E1CB5500B669DF /* Images.xcassets */,
 				63D4B77217E1CB5400B669DF /* Supporting Files */,
 			);
@@ -150,6 +164,20 @@
 				63D4B79317E1CB5500B669DF /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		63D4B7AB17E46A3100B669DF /* HAHud */ = {
+			isa = PBXGroup;
+			children = (
+				63D4B7A017E1CC4200B669DF /* HAHud.h */,
+				63D4B7A117E1CC4200B669DF /* HAHud.m */,
+				63D4B7AC17E4D4E600B669DF /* button_bg.png */,
+				63D4B7A317E3141200B669DF /* hud-0@2x.png */,
+				63D4B7A417E3141200B669DF /* hud-0.png */,
+				63D4B7A517E3141200B669DF /* hud-1.png */,
+				63D4B7A617E3141200B669DF /* hud-1@2x.png */,
+			);
+			name = HAHud;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -230,8 +258,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				63D4B78417E1CB5500B669DF /* Images.xcassets in Resources */,
+				63D4B7A917E3141200B669DF /* hud-1.png in Resources */,
 				63D4B77617E1CB5500B669DF /* InfoPlist.strings in Resources */,
 				63D4B77F17E1CB5500B669DF /* Main.storyboard in Resources */,
+				63D4B7AD17E4D4E600B669DF /* button_bg.png in Resources */,
+				63D4B7A817E3141200B669DF /* hud-0.png in Resources */,
+				63D4B7A717E3141200B669DF /* hud-0@2x.png in Resources */,
+				63D4B7AA17E3141200B669DF /* hud-1@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,6 +283,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63D4B7A217E1CC4200B669DF /* HAHud.m in Sources */,
 				63D4B77817E1CB5500B669DF /* main.m in Sources */,
 				63D4B78217E1CB5500B669DF /* HAHUDViewController.m in Sources */,
 				63D4B77C17E1CB5500B669DF /* HAHUDAppDelegate.m in Sources */,
@@ -310,7 +344,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -349,7 +383,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
