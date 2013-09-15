@@ -476,6 +476,16 @@ UIView *_accView;           // buttons view wrapper
                                                            toItem:_view.superview
                                                         attribute:NSLayoutAttributeCenterY
                                                        multiplier:1.f constant:0.f]];
+    [constraints addObjectsFromArray:[NSLayoutConstraint
+                                      constraintsWithVisualFormat:@"|[item(==wrapper)]|"
+                                      options:NSLayoutFormatAlignAllCenterY
+                                      metrics:nil
+                                      views:@{@"item": _view, @"wrapper": self.parentView}]];
+    [constraints addObjectsFromArray:[NSLayoutConstraint
+                                      constraintsWithVisualFormat:@"V:|[item(==wrapper)]|"
+                                      options:NSLayoutFormatAlignAllCenterX
+                                      metrics:nil
+                                      views:@{@"item": _view, @"wrapper": self.parentView}]];
     [_view.superview addConstraints:constraints];
 }
 
