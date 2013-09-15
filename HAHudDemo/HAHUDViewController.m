@@ -55,7 +55,7 @@
             break;
     }
     hud.message.text = msg;
-//    hud.parentView = self.view;
+    hud.parentView = self.view;
     [hud show];
 }
 
