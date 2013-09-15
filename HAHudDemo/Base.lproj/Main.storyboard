@@ -69,7 +69,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" tag="14" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NGg-Ok-VI2">
-                                <rect key="frame" x="67" y="154" width="186" height="30"/>
+                                <rect key="frame" x="35" y="154" width="251" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="dsY-Fz-xZj"/>
@@ -117,7 +117,7 @@
                             <constraint firstAttribute="centerX" secondItem="NGg-Ok-VI2" secondAttribute="centerX" id="eAE-85-qrY"/>
                             <constraint firstItem="KvP-wN-p9B" firstAttribute="centerX" secondItem="Agv-uP-aSB" secondAttribute="centerX" id="fGH-HE-lUb"/>
                             <constraint firstItem="KvP-wN-p9B" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="i1K-WH-E5u"/>
-                            <constraint firstItem="NGg-Ok-VI2" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="67" id="loY-wE-Wtk"/>
+                            <constraint firstItem="NGg-Ok-VI2" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="35" id="loY-wE-Wtk"/>
                             <constraint firstItem="NGg-Ok-VI2" firstAttribute="top" secondItem="QtP-oE-chC" secondAttribute="bottom" constant="8" symbolic="YES" id="lqt-Zk-jzw"/>
                             <constraint firstItem="Xcb-zA-TwW" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="61" id="oBU-EH-VZ5"/>
                             <constraint firstAttribute="centerX" secondItem="QtP-oE-chC" secondAttribute="centerX" id="rsI-FP-rQl"/>
