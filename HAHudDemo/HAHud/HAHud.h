@@ -32,27 +32,39 @@
 
 @interface HAHud : NSObject
 
+// Create an alert with just a message.
 + (instancetype)hud;
+// Create an alert with a message and running activity indicator
 + (instancetype)hudWithActivityIndicator;
+// Create an alert with a message and a boolean mark ("x" or "✔")
 + (instancetype)hudWithBooleanMark:(BOOL)mark;
+// Create an alert with a message and a progress indicator
 + (instancetype)hudWithProgressRate:(CGFloat)progress;
+// Create an alert with a message and buttons, stacked or not
 + (instancetype)hudWithButtonTitles:(NSArray *)buttonTitles stacked:(BOOL)stacked;
+// Create an alert with a message, a boolean mark, and buttons side by side
 + (instancetype)hudWithButtonTitles:(NSArray *)buttonTitles booleanMark:(BOOL)mark;
 
-+ (BOOL)isHudDisplayedInView:(UIView *)parentView;     // is a hud already displayed on screen?
+// is a hud already displayed on screen?
++ (BOOL)isHudDisplayedInView:(UIView *)parentView;
 
+// Show the hud
 - (void)show;
+// Dismiss the hud
 - (void)dismiss;
+// Dismiss the hud after interval seconds
 - (void)dismissAfterInterval:(NSTimeInterval)interval;
+// Set the completion block that will trigger on any button press
+// The hud is automatically dismissed before the completion block is triggered
 - (void)setCompletion:(void (^)(NSUInteger selectedButtonIndex))completionBlock;
 
-@property (nonatomic) CGFloat buttonHeight;             // Height of the buttons (defaults to 40)
-@property (nonatomic, assign) UIView *parentView;       // view to attach the hud to (defaults to window)
-@property (nonatomic, retain) UILabel *message;         // message to display
-@property (nonatomic, readonly) UIView *hudView;        // the actual hud view
-@property (nonatomic, retain) UIImageView *booleanMarkView;
-@property (nonatomic, retain) UIActivityIndicatorView *activityIndicator;
-@property (nonatomic, retain) UIProgressView *progressView;
-@property (nonatomic, retain) NSArray *buttons;
+@property (nonatomic) CGFloat buttonHeight;                                 // Height of the buttons (defaults to 40)
+@property (nonatomic, assign) UIView *parentView;                           // view to attach the hud to (defaults to window)
+@property (nonatomic, retain) UILabel *message;                             // message to display
+@property (nonatomic, readonly) UIView *hudView;                            // the actual hud view
+@property (nonatomic, retain) UIImageView *booleanMarkView;                 // the boolean mark view
+@property (nonatomic, retain) UIActivityIndicatorView *activityIndicator;   // the activity indicator view
+@property (nonatomic, retain) UIProgressView *progressView;                 // the progress view
+@property (nonatomic, retain) NSArray *buttons;                             // the buttons array. They are instances of a UIButton subclass
 
 @end
