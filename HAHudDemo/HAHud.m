@@ -174,7 +174,7 @@ UIView *_accView;           // buttons view wrapper
     _view.translatesAutoresizingMaskIntoConstraints = NO;
     _hudView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
     _hudView.backgroundColor = [UIColor blackColor];
-    _hudView.alpha = 0.8;
+    _hudView.alpha = 0.9f;
     _hudView.layer.cornerRadius = 2;
     _hudView.translatesAutoresizingMaskIntoConstraints = NO;
     [_view addSubview:_hudView];
