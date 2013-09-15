@@ -158,7 +158,7 @@
 				63D4B7A517E3141200B669DF /* hud-1.png */,
 				63D4B7A617E3141200B669DF /* hud-1@2x.png */,
 			);
-			name = HAHud;
+			path = HAHud;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -467,6 +467,7 @@
 				63D4B79C17E1CB5500B669DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		63D4B79D17E1CB5500B669DF /* Build configuration list for PBXNativeTarget "HAHudDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -475,6 +476,7 @@
 				63D4B79F17E1CB5500B669DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
