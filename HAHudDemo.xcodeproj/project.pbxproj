@@ -19,15 +19,12 @@
 		63D4B78B17E1CB5500B669DF /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63D4B78A17E1CB5500B669DF /* XCTest.framework */; };
 		63D4B78C17E1CB5500B669DF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63D4B76B17E1CB5400B669DF /* Foundation.framework */; };
 		63D4B78D17E1CB5500B669DF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63D4B76F17E1CB5400B669DF /* UIKit.framework */; };
-		63D4B79517E1CB5500B669DF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 63D4B79317E1CB5500B669DF /* InfoPlist.strings */; };
-		63D4B79717E1CB5500B669DF /* HAHudDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D4B79617E1CB5500B669DF /* HAHudDemoTests.m */; };
 		63D4B7A217E1CC4200B669DF /* HAHud.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D4B7A117E1CC4200B669DF /* HAHud.m */; };
 		63D4B7A717E3141200B669DF /* hud-0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63D4B7A317E3141200B669DF /* hud-0@2x.png */; };
 		63D4B7A817E3141200B669DF /* hud-0.png in Resources */ = {isa = PBXBuildFile; fileRef = 63D4B7A417E3141200B669DF /* hud-0.png */; };
 		63D4B7A917E3141200B669DF /* hud-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 63D4B7A517E3141200B669DF /* hud-1.png */; };
 		63D4B7AA17E3141200B669DF /* hud-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63D4B7A617E3141200B669DF /* hud-1@2x.png */; };
 		63D4B7AD17E4D4E600B669DF /* button_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 63D4B7AC17E4D4E600B669DF /* button_bg.png */; };
-		63D4B7AF17E59A3400B669DF /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 63D4B7AE17E59A3400B669DF /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,9 +54,6 @@
 		63D4B78317E1CB5500B669DF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		63D4B78917E1CB5500B669DF /* HAHudDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HAHudDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		63D4B78A17E1CB5500B669DF /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		63D4B79217E1CB5500B669DF /* HAHudDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HAHudDemoTests-Info.plist"; sourceTree = "<group>"; };
-		63D4B79417E1CB5500B669DF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		63D4B79617E1CB5500B669DF /* HAHudDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HAHudDemoTests.m; sourceTree = "<group>"; };
 		63D4B7A017E1CC4200B669DF /* HAHud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HAHud.h; sourceTree = "<group>"; };
 		63D4B7A117E1CC4200B669DF /* HAHud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HAHud.m; sourceTree = "<group>"; };
 		63D4B7A317E3141200B669DF /* hud-0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hud-0@2x.png"; sourceTree = "<group>"; };
@@ -97,8 +91,8 @@
 		63D4B75F17E1CB5400B669DF = {
 			isa = PBXGroup;
 			children = (
+				63D4B7AE17E59A3400B669DF /* README.md */,
 				63D4B77117E1CB5400B669DF /* HAHudDemo */,
-				63D4B79017E1CB5500B669DF /* HAHudDemoTests */,
 				63D4B76A17E1CB5400B669DF /* Frameworks */,
 				63D4B76917E1CB5400B669DF /* Products */,
 			);
@@ -150,24 +144,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		63D4B79017E1CB5500B669DF /* HAHudDemoTests */ = {
-			isa = PBXGroup;
-			children = (
-				63D4B79617E1CB5500B669DF /* HAHudDemoTests.m */,
-				63D4B79117E1CB5500B669DF /* Supporting Files */,
-			);
-			path = HAHudDemoTests;
-			sourceTree = "<group>";
-		};
-		63D4B79117E1CB5500B669DF /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				63D4B79217E1CB5500B669DF /* HAHudDemoTests-Info.plist */,
-				63D4B79317E1CB5500B669DF /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		63D4B7AB17E46A3100B669DF /* HAHud */ = {
 			isa = PBXGroup;
 			children = (
@@ -178,7 +154,6 @@
 				63D4B7A417E3141200B669DF /* hud-0.png */,
 				63D4B7A517E3141200B669DF /* hud-1.png */,
 				63D4B7A617E3141200B669DF /* hud-1@2x.png */,
-				63D4B7AE17E59A3400B669DF /* README.md */,
 			);
 			name = HAHud;
 			sourceTree = "<group>";
@@ -266,7 +241,6 @@
 				63D4B77F17E1CB5500B669DF /* Main.storyboard in Resources */,
 				63D4B7AD17E4D4E600B669DF /* button_bg.png in Resources */,
 				63D4B7A817E3141200B669DF /* hud-0.png in Resources */,
-				63D4B7AF17E59A3400B669DF /* README.md in Resources */,
 				63D4B7A717E3141200B669DF /* hud-0@2x.png in Resources */,
 				63D4B7AA17E3141200B669DF /* hud-1@2x.png in Resources */,
 			);
@@ -276,7 +250,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63D4B79517E1CB5500B669DF /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,7 +271,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63D4B79717E1CB5500B669DF /* HAHudDemoTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,14 +299,6 @@
 				63D4B77E17E1CB5500B669DF /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		63D4B79317E1CB5500B669DF /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				63D4B79417E1CB5500B669DF /* en */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
