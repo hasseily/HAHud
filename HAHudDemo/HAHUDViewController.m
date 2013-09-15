@@ -21,28 +21,29 @@
     switch (sender.tag) {
         case 11:
             hud = [HAHud hud];
-            [hud hideAfterInterval:3];
+            [hud dismissAfterInterval:3];
             break;
         case 12:
             hud = [HAHud hudWithActivityIndicator];
-            [hud hideAfterInterval:3];
+            [hud dismissAfterInterval:3];
             break;
         case 13:
             hud = [HAHud hudWithProgressRate:0.3f];
             hud.progressView.progress = 0.7f;
-            [hud hideAfterInterval:3];
+            [hud dismissAfterInterval:3];
             break;
         case 14:
             hud = [HAHud hudWithBooleanMark:YES];
-            [hud hideAfterInterval:3];
+            [hud dismissAfterInterval:3];
             break;
         case 15:
             hud = [HAHud hudWithButtonTitles:@[@"Cancel", @"OK"] stacked:NO];
             [hud setCompletion:^(NSUInteger bTag) {
                 HAHud *newHud = [HAHud hud];
                 newHud.message.text = [NSString stringWithFormat:@"You tapped button # %lu", (unsigned long)bTag];
+                newHud.parentView = self.view;
                 [newHud show];
-                [newHud hideAfterInterval:2];
+                [newHud dismissAfterInterval:2];
             }];
             break;
         case 16:
@@ -50,10 +51,11 @@
             break;
         default:
             hud = [HAHud hud];
-            [hud hideAfterInterval:3];
+            [hud dismissAfterInterval:3];
             break;
     }
     hud.message.text = msg;
+//    hud.parentView = self.view;
     [hud show];
 }
 

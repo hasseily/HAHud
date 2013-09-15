@@ -14,7 +14,7 @@
 
 
 @interface HABlockView : UIView
-- (void)hide;
+- (void)dismiss;
 @property (nonatomic, copy) void (^completionBlock)(NSUInteger selectedButtonIndex);
 @end
 
@@ -26,14 +26,14 @@
 // when the completion happens. On the other hand, the view is certainly
 // happily on screen.
 
-- (void)hide {
+- (void)dismiss {
     if (self.superview) {
         [self removeFromSuperview];
     }
 }
 
 - (void)didTapButton:(UIButton *)sender {
-    [self hide];
+    [self dismiss];
     if (self.completionBlock) {
         self.completionBlock(sender.tag);
     }
@@ -57,6 +57,9 @@
 
 @implementation HAHud
 
+HABlockView *_view;         // transparent full-screen view
+UIView *_accView;           // buttons view wrapper
+
 # pragma mark constructors
 
 + (instancetype)hudAllocator {
@@ -74,10 +77,10 @@
     [constraints addObject:[NSLayoutConstraint constraintWithItem:hud.message
                                                         attribute:NSLayoutAttributeCenterY
                                                         relatedBy:NSLayoutRelationEqual
-                                                           toItem:hud.hudView
+                                                           toItem:hud->_hudView
                                                         attribute:NSLayoutAttributeCenterY
                                                        multiplier:1.f constant:0.f]];
-    [hud.hudView addConstraints:constraints];
+    [hud->_hudView addConstraints:constraints];
     return hud;
 }
 
@@ -116,13 +119,19 @@
 #pragma mark destructor
 
 - (void)dealloc {
+    NSLog(@"dealloc");
+    [_view release];
+    _view = nil;
     [super dealloc];
 }
 
 #pragma mark class methods
 
-+ (BOOL)hudIsDisplayed {
-    NSArray *subs = [self win].subviews;
++ (BOOL)isHudDisplayedInView:(UIView *)parentView {
+    if (!parentView) {
+        parentView = [self win];
+    }
+    NSArray *subs = parentView.subviews;
     for (UIView *aView in subs) {
         if (aView.tag == HAHUDVIEWTAG) {
             return YES;
@@ -158,11 +167,12 @@
 #pragma mark view methods
 
 - (void)initView {
-    if (self.view) {
+    if (_view) {
         return;
     }
-    _view = [[[HABlockView alloc] initWithFrame:[[self class] win].bounds] autorelease];
+    _view = [[HABlockView alloc] initWithFrame:[[self class] win].bounds];
     _view.backgroundColor = [UIColor clearColor];
+    _view.translatesAutoresizingMaskIntoConstraints = NO;
     _hudView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
     _hudView.backgroundColor = [UIColor blackColor];
     _hudView.alpha = 0.8;
@@ -442,19 +452,39 @@
 }
 
 - (void)setCompletion:(void (^)(NSUInteger))completionBlock {
-    self.view.completionBlock = completionBlock;
+    _view.completionBlock = completionBlock;
 }
 
 - (void)show {
-    [[[self class] win] addSubview:self.view];
+    if (self.parentView) {
+        _view.frame = self.parentView.bounds;
+        [self.parentView addSubview:_view];
+    } else {
+        [[[self class] win] addSubview:_view];
+    }
+    // Center the _view inside the parentView, so that autorotation is properly handled
+    NSMutableArray *constraints = [NSMutableArray array];
+    [constraints addObject:[NSLayoutConstraint constraintWithItem:_view
+                                                        attribute:NSLayoutAttributeCenterX
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:_view.superview
+                                                        attribute:NSLayoutAttributeCenterX
+                                                       multiplier:1.f constant:0.f]];
+    [constraints addObject:[NSLayoutConstraint constraintWithItem:_view
+                                                        attribute:NSLayoutAttributeCenterY
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:_view.superview
+                                                        attribute:NSLayoutAttributeCenterY
+                                                       multiplier:1.f constant:0.f]];
+    [_view.superview addConstraints:constraints];
 }
 
-- (void)hide {
-    [self.view hide];
+- (void)dismiss {
+    [_view dismiss];
 }
 
-- (void)hideAfterInterval:(NSTimeInterval)interval {
-    [self.view performSelector:@selector(hide) withObject:nil afterDelay:interval];
+- (void)dismissAfterInterval:(NSTimeInterval)interval {
+    [_view performSelector:@selector(dismiss) withObject:nil afterDelay:interval];
 }
 
 @end

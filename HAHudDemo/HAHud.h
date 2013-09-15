@@ -14,14 +14,18 @@
         - Buttons side by side or stacked vertically
  
     Important properties are:
+        - parentView: the view on which the hud will display (defaults to the window)
         - message: the message UILabel
-        - dismissalBlock : triggers on a button tap (hud is automatically dismissed)
         - activityIndicator: it is automatically on as the view is shown
         - progressView: set progress directly on it
+    
+    Use setCompletion: to assign a callback which will trigger when a button is pressed
+    
+    Use isHudDisplayedInView: to check if there's a hud showing on parentView.
+    If you pass in nil, then the window is checked.
 */
 
 #import <UIKit/UIKit.h>
-@class HABlockView;
 
 @interface HAHud : NSObject
 
@@ -31,17 +35,16 @@
 + (instancetype)hudWithProgressRate:(CGFloat)progress;
 + (instancetype)hudWithButtonTitles:(NSArray *)buttonTitles stacked:(BOOL)stacked;
 
-+ (BOOL)hudIsDisplayed;     // is a hud already displayed on screen?
++ (BOOL)isHudDisplayedInView:(UIView *)parentView;     // is a hud already displayed on screen?
 
-- (void)show;   // Returns NO if won't display because another is already showing
-- (void)hide;
-- (void)hideAfterInterval:(NSTimeInterval)interval;
+- (void)show;
+- (void)dismiss;
+- (void)dismissAfterInterval:(NSTimeInterval)interval;
 - (void)setCompletion:(void (^)(NSUInteger selectedButtonIndex))completionBlock;
 
+@property (nonatomic, assign) UIView *parentView;
 @property (nonatomic, retain) UILabel *message;     // message to display
-@property (nonatomic, readonly) HABlockView *view;         // transparent full-screen view
 @property (nonatomic, readonly) UIView *hudView;      // the actual hud view
-@property (nonatomic, readonly) UIView *accView;    // accessories (buttons, activity...) view
 @property (nonatomic, retain) UIImageView *booleanMarkView;
 @property (nonatomic, retain) UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, retain) UIProgressView *progressView;
