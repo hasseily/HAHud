@@ -23,6 +23,9 @@
     
     Use isHudDisplayedInView: to check if there's a hud showing on parentView.
     If you pass in nil, then the window is checked.
+ 
+    NOTE:   if the parentView is the default window, then the hud won't properly autorotate.
+            Use your view controller's main view whenever you can.
 */
 
 #import <UIKit/UIKit.h>
@@ -42,9 +45,10 @@
 - (void)dismissAfterInterval:(NSTimeInterval)interval;
 - (void)setCompletion:(void (^)(NSUInteger selectedButtonIndex))completionBlock;
 
-@property (nonatomic, assign) UIView *parentView;
-@property (nonatomic, retain) UILabel *message;     // message to display
-@property (nonatomic, readonly) UIView *hudView;      // the actual hud view
+@property (nonatomic) CGFloat buttonHeight;             // Height of the buttons (defaults to 40)
+@property (nonatomic, assign) UIView *parentView;       // view to attach the hud to (defaults to window)
+@property (nonatomic, retain) UILabel *message;         // message to display
+@property (nonatomic, readonly) UIView *hudView;        // the actual hud view
 @property (nonatomic, retain) UIImageView *booleanMarkView;
 @property (nonatomic, retain) UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, retain) UIProgressView *progressView;

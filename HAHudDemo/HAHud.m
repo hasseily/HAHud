@@ -119,7 +119,6 @@ UIView *_accView;           // buttons view wrapper
 #pragma mark destructor
 
 - (void)dealloc {
-    NSLog(@"dealloc");
     [_view release];
     _view = nil;
     [super dealloc];
@@ -160,7 +159,7 @@ UIView *_accView;           // buttons view wrapper
     aButton.layer.borderWidth = 1;
     aButton.layer.borderColor = [UIColor whiteColor].CGColor;
     aButton.clipsToBounds = YES;
-    aButton.titleLabel.font = [UIFont systemFontOfSize: 12];
+    aButton.titleLabel.font = [UIFont boldSystemFontOfSize:[UIFont systemFontSize]];
     return aButton;
 }
 
@@ -216,7 +215,7 @@ UIView *_accView;           // buttons view wrapper
     _message.textAlignment = NSTextAlignmentCenter;
     _message.backgroundColor = [UIColor clearColor];
     _message.textColor = [UIColor whiteColor];
-    _message.font = [UIFont systemFontOfSize:[UIFont smallSystemFontSize]];
+    _message.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
     _message.translatesAutoresizingMaskIntoConstraints = NO;
     [_hudView addSubview:_message];
 
@@ -345,6 +344,9 @@ UIView *_accView;           // buttons view wrapper
     if (buttonTitles.count == 0) {
         return;
     }
+    if (!self.buttonHeight) {
+        self.buttonHeight = 40.f;
+    }
 
     // now generate the constraints with a visual format
     NSMutableArray *wrapperConstraints = [NSMutableArray array];
@@ -382,13 +384,14 @@ UIView *_accView;           // buttons view wrapper
     self.buttons = tempArray;
 
     NSMutableArray *constraints = [NSMutableArray array];
+    NSString *itemS;        // tag of the current button
+    NSString *firstItemS;   // tag of the first button
 
     if (stacked) {
         // When stacked, it's easy. Each button is the width of the hud minus the padding
         // and each button is aligned below the previous one, where the last is just above the bottom
 
         NSMutableString *dynamicConstraint = [NSMutableString stringWithString:@"V:|"];
-        NSString *itemS;
         NSMutableDictionary *viewsDict = [NSMutableDictionary dictionary];
         
         for (NSUInteger i=0; i<self.buttons.count; i++) {
@@ -401,10 +404,11 @@ UIView *_accView;           // buttons view wrapper
             // add to vertical constraint
             itemS = [NSString stringWithFormat:@"item_%lu", (unsigned long)i];
             if (i == 0) {
-                [dynamicConstraint appendFormat:@"[%@]", itemS];
+                firstItemS = itemS;
+                [dynamicConstraint appendFormat:@"[%@(==buttonHeight@1000)]", itemS];
 
             } else {
-                [dynamicConstraint appendFormat:@"-10-[%@]", itemS];
+                [dynamicConstraint appendFormat:@"-10-[%@(==%@)]", itemS, firstItemS];
             }
             [viewsDict setObject:[_buttons objectAtIndex:i] forKey:itemS];
         }
@@ -412,23 +416,21 @@ UIView *_accView;           // buttons view wrapper
         [constraints addObjectsFromArray:[NSLayoutConstraint
                                           constraintsWithVisualFormat:dynamicConstraint
                                           options:NSLayoutFormatAlignAllCenterX
-                                          metrics:nil
+                                          metrics:@{@"buttonHeight": [NSNumber numberWithFloat:self.buttonHeight]}
                                           views:viewsDict]];
     } else {
         // When side by side, all the buttons align horizontally inside the wrapper view
         // and they all use the same width which is at most the size of the wrapper
         
         NSMutableString *dynamicConstraint = [NSMutableString stringWithString:@"H:|"];
-        NSString *itemS;        // tag of the current button
-        NSString *firstItemS;   // tag of the first button
         NSMutableDictionary *viewsDict = [NSMutableDictionary dictionaryWithObject:_accView forKey:@"wrapper"];
         
         for (NSUInteger i=0; i<self.buttons.count; i++) {
             // simple vertical constraint
             [constraints addObjectsFromArray:[NSLayoutConstraint
-                                              constraintsWithVisualFormat:@"V:|[item]|"
+                                              constraintsWithVisualFormat:@"V:|[item(==buttonHeight@1000)]|"
                                               options:NSLayoutFormatAlignAllCenterX
-                                              metrics:nil
+                                              metrics:@{@"buttonHeight": [NSNumber numberWithFloat:self.buttonHeight]}
                                               views:@{@"item": [_buttons objectAtIndex:i], @"wrapper": _accView}]];
             // add to horizontal constraint
             itemS = [NSString stringWithFormat:@"item_%lu", (unsigned long)i];
