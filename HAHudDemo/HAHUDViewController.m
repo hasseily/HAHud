@@ -16,7 +16,7 @@
 @implementation HAHUDViewController
 
 - (IBAction)didTouchButton:(UIButton *)sender {
-    NSString *msg = @"Thanks for using this code chunk.\nI hope you find it useful.\nhttp://henri.tel";
+    NSString *msg = @"This is a demo of HAHud.\n\nThanks for trying it out.";
     HAHud *hud;
     switch (sender.tag) {
         case 11:
@@ -39,11 +39,10 @@
         case 15:
             hud = [HAHud hudWithButtonTitles:@[@"Cancel", @"OK"] stacked:NO];
             [hud setCompletion:^(NSUInteger bTag) {
-                HAHud *newHud = [HAHud hud];
+                HAHud *newHud = [HAHud hudWithButtonTitles:@[@"OK"] booleanMark:bTag];
                 newHud.message.text = [NSString stringWithFormat:@"You tapped button # %lu", (unsigned long)bTag];
                 newHud.parentView = self.view;
                 [newHud show];
-                [newHud dismissAfterInterval:2];
             }];
             break;
         case 16:

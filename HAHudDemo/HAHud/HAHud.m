@@ -46,9 +46,9 @@
 + (instancetype)hudAllocator;
 - (void)initView;
 - (void)addActivityIndicator;
-- (void)addBooleanMark:(BOOL)mark;
+- (void)addBooleanMark:(BOOL)mark aboveButtons:(BOOL)isAboveButtons;
 - (void)addProgressView:(CGFloat)progress;
-- (void)addButtonTitles:(NSArray *)buttonTitles stacked:(BOOL)stacked;
+- (void)addButtonTitles:(NSArray *)buttonTitles stacked:(BOOL)stacked belowView:(UIView *)topView;
 - (void)didTapButton:(UIButton *)sender;
 + (UIWindow *)win;
 + (UIButton *)roundedButton;
@@ -95,7 +95,7 @@ UIView *_accView;           // buttons view wrapper
 + (instancetype)hudWithBooleanMark:(BOOL)mark {
     HAHud *hud = [self hudAllocator];
     if (hud) {
-        [hud addBooleanMark:mark];
+        [hud addBooleanMark:mark aboveButtons:NO];
     }
     return hud;
 }
@@ -111,7 +111,16 @@ UIView *_accView;           // buttons view wrapper
 + (instancetype)hudWithButtonTitles:(NSArray *)buttonTitles stacked:(BOOL)stacked {
     HAHud *hud = [self hudAllocator];
     if (hud) {
-        [hud addButtonTitles:buttonTitles stacked:stacked];
+        [hud addButtonTitles:buttonTitles stacked:stacked belowView:hud->_message];
+    }
+    return hud;
+}
+
++ (instancetype)hudWithButtonTitles:(NSArray *)buttonTitles booleanMark:(BOOL)mark {
+    HAHud *hud = [self hudAllocator];
+    if (hud) {
+        [hud addBooleanMark:mark aboveButtons:YES];
+        [hud addButtonTitles:buttonTitles stacked:NO belowView:hud->_booleanMarkView];
     }
     return hud;
 }
@@ -265,7 +274,7 @@ UIView *_accView;           // buttons view wrapper
     [_hudView addConstraints:constraints];
 }
 
-- (void)addBooleanMark:(BOOL)mark {
+- (void)addBooleanMark:(BOOL)mark aboveButtons:(BOOL)isAboveButtons {
     if (self.booleanMarkView) {
         [self.booleanMarkView removeFromSuperview];
         self.booleanMarkView = nil;
@@ -283,7 +292,9 @@ UIView *_accView;           // buttons view wrapper
                                       metrics:nil
                                       views:@{@"item": _booleanMarkView}]];
     [constraints addObjectsFromArray:[NSLayoutConstraint
-                                      constraintsWithVisualFormat:@"V:[label]-(>=20)-[item]-20-|"
+                                      constraintsWithVisualFormat:(isAboveButtons
+                                                                   ? @"V:[label]-(>=20)-[item]"
+                                                                   : @"V:[label]-(>=20)-[item]-20-|")
                                       options:NSLayoutFormatAlignAllCenterX
                                       metrics:nil
                                       views:@{@"label": _message, @"item": _booleanMarkView}]];
@@ -333,7 +344,7 @@ UIView *_accView;           // buttons view wrapper
     [_hudView addConstraints:constraints];
 }
 
-- (void)addButtonTitles:(NSArray *)buttonTitles stacked:(BOOL)stacked {
+- (void)addButtonTitles:(NSArray *)buttonTitles stacked:(BOOL)stacked belowView:(UIView *)topView {
     if (self.buttons) {
         for (UIButton *button in self.buttons) {
             [button removeFromSuperview];
@@ -360,10 +371,10 @@ UIView *_accView;           // buttons view wrapper
     [_hudView addSubview:_accView];
 
     [wrapperConstraints addObjectsFromArray:[NSLayoutConstraint
-                                             constraintsWithVisualFormat:@"V:[label]-20-[acc(>=20)]-10-|"
+                                             constraintsWithVisualFormat:@"V:[view]-20-[acc(>=20)]-10-|"
                                              options:NSLayoutFormatAlignAllCenterX
                                              metrics:nil
-                                             views:@{@"label": _message, @"acc": _accView}]];
+                                             views:@{@"view": (topView ? topView : _message), @"acc": _accView}]];
     [wrapperConstraints addObjectsFromArray:[NSLayoutConstraint
                                              constraintsWithVisualFormat:@"|-10-[acc]-10-|"
                                              options:NSLayoutFormatAlignAllCenterY

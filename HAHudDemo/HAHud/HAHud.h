@@ -37,6 +37,7 @@
 + (instancetype)hudWithBooleanMark:(BOOL)mark;
 + (instancetype)hudWithProgressRate:(CGFloat)progress;
 + (instancetype)hudWithButtonTitles:(NSArray *)buttonTitles stacked:(BOOL)stacked;
++ (instancetype)hudWithButtonTitles:(NSArray *)buttonTitles booleanMark:(BOOL)mark;
 
 + (BOOL)isHudDisplayedInView:(UIView *)parentView;     // is a hud already displayed on screen?
 
