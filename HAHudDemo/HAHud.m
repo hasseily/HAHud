@@ -458,12 +458,11 @@ UIView *_accView;           // buttons view wrapper
 }
 
 - (void)show {
-    if (self.parentView) {
-        _view.frame = self.parentView.bounds;
-        [self.parentView addSubview:_view];
-    } else {
-        [[[self class] win] addSubview:_view];
+    if (!self.parentView) {
+        self.parentView = [[self class] win];
     }
+    _view.frame = self.parentView.bounds;
+    [self.parentView addSubview:_view];
     // Center the _view inside the parentView, so that autorotation is properly handled
     NSMutableArray *constraints = [NSMutableArray array];
     [constraints addObject:[NSLayoutConstraint constraintWithItem:_view
