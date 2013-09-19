@@ -14,7 +14,6 @@
 
 
 @interface HABlockView : UIView
-- (void)dismiss;
 @property (nonatomic, copy) void (^completionBlock)(NSUInteger selectedButtonIndex);
 @end
 
@@ -26,16 +25,12 @@
 // when the completion happens. On the other hand, the view is certainly
 // happily on screen.
 
-- (void)dismiss {
+- (void)didTapButton:(UIButton *)sender {
     if (self.superview) {
         [self removeFromSuperview];
     }
-}
-
-- (void)didTapButton:(UIButton *)sender {
-    [self dismiss];
     if (self.completionBlock) {
-        self.completionBlock(sender.tag);
+        self.completionBlock(sender ? sender.tag : 0);
     }
 }
 
@@ -55,10 +50,11 @@
 
 @end
 
-@implementation HAHud
-
-HABlockView *_view;         // transparent full-screen view
-UIView *_accView;           // buttons view wrapper
+@implementation HAHud {
+    
+    HABlockView *_view;         // transparent full-screen view
+    UIView *_accView;           // buttons view wrapper
+}
 
 # pragma mark constructors
 
@@ -128,6 +124,8 @@ UIView *_accView;           // buttons view wrapper
 #pragma mark destructor
 
 - (void)dealloc {
+    [_hudView release];
+    _hudView = nil;
     [_view release];
     _view = nil;
     [super dealloc];
@@ -164,7 +162,7 @@ UIView *_accView;           // buttons view wrapper
     aButton.titleLabel.backgroundColor = [UIColor clearColor];
     aButton.titleLabel.numberOfLines = 1;
     aButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    aButton.layer.cornerRadius = 2;
+    aButton.layer.cornerRadius = 3;
     aButton.layer.borderWidth = 1;
     aButton.layer.borderColor = [UIColor whiteColor].CGColor;
     aButton.clipsToBounds = YES;
@@ -176,15 +174,20 @@ UIView *_accView;           // buttons view wrapper
 
 - (void)initView {
     if (_view) {
-        return;
+        for (UIView *v in [_view subviews]) {
+            [v removeFromSuperview];
+        }
+        [_view removeFromSuperview];
+    } else {
+        _view = [[HABlockView alloc] initWithFrame:[[self class] win].bounds];
     }
-    _view = [[HABlockView alloc] initWithFrame:[[self class] win].bounds];
     _view.backgroundColor = [UIColor clearColor];
     _view.translatesAutoresizingMaskIntoConstraints = NO;
-    _hudView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+    [_hudView release];
+    _hudView = [[UIView alloc] initWithFrame:CGRectZero];
     _hudView.backgroundColor = [UIColor blackColor];
     _hudView.alpha = 0.9f;
-    _hudView.layer.cornerRadius = 2;
+    _hudView.layer.cornerRadius = 3;
     _hudView.translatesAutoresizingMaskIntoConstraints = NO;
     [_view addSubview:_hudView];
     
@@ -215,10 +218,10 @@ UIView *_accView;           // buttons view wrapper
                                                         attribute:NSLayoutAttributeCenterY
                                                        multiplier:1.f constant:0.f]];
     [_view addConstraints:constraints];
-
+    
     // Add the text label first
     [constraints removeAllObjects];
-    _message = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
+    self.message = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
     _message.text = @"";
     _message.numberOfLines = 0;
     _message.textAlignment = NSTextAlignmentCenter;
@@ -227,7 +230,7 @@ UIView *_accView;           // buttons view wrapper
     _message.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
     _message.translatesAutoresizingMaskIntoConstraints = NO;
     [_hudView addSubview:_message];
-
+    
     [constraints addObjectsFromArray:[NSLayoutConstraint
                                       constraintsWithVisualFormat:@"|-20-[label]-20-|"
                                       options:NSLayoutFormatAlignAllCenterX
@@ -239,7 +242,7 @@ UIView *_accView;           // buttons view wrapper
                                       metrics:nil
                                       views:@{@"label": _message}]];
     [_hudView addConstraints:constraints];
-
+    
 }
 
 - (void)addActivityIndicator {
@@ -251,6 +254,7 @@ UIView *_accView;           // buttons view wrapper
     [self.activityIndicator startAnimating];
     self.activityIndicator.translatesAutoresizingMaskIntoConstraints = NO;
     [_hudView addSubview:self.activityIndicator];
+    
     
     NSMutableArray *constraints = [NSMutableArray array];
     [constraints addObjectsFromArray:[NSLayoutConstraint
@@ -321,7 +325,7 @@ UIView *_accView;           // buttons view wrapper
     self.progressView.trackTintColor = [UIColor darkGrayColor];
     self.progressView.translatesAutoresizingMaskIntoConstraints = NO;
     [_hudView addSubview:self.progressView];
-
+    
     NSMutableArray *constraints = [NSMutableArray array];
     [constraints addObjectsFromArray:[NSLayoutConstraint
                                       constraintsWithVisualFormat:@"|-20-[item]-20-|"
@@ -358,7 +362,7 @@ UIView *_accView;           // buttons view wrapper
     if (!self.buttonHeight) {
         self.buttonHeight = 40.f;
     }
-
+    
     // now generate the constraints with a visual format
     NSMutableArray *wrapperConstraints = [NSMutableArray array];
     
@@ -369,7 +373,7 @@ UIView *_accView;           // buttons view wrapper
     _accView.backgroundColor = [UIColor clearColor];
     _accView.translatesAutoresizingMaskIntoConstraints = NO;
     [_hudView addSubview:_accView];
-
+    
     [wrapperConstraints addObjectsFromArray:[NSLayoutConstraint
                                              constraintsWithVisualFormat:@"V:[view]-20-[acc(>=20)]-10-|"
                                              options:NSLayoutFormatAlignAllCenterX
@@ -381,7 +385,7 @@ UIView *_accView;           // buttons view wrapper
                                              metrics:nil
                                              views:@{@"acc": _accView}]];
     [_hudView addConstraints:wrapperConstraints];
-
+    
     NSMutableArray *tempArray = [NSMutableArray array];
     for (NSUInteger i=0; i<buttonTitles.count; i++) {
         UIButton *b = [[self class] roundedButton];
@@ -393,15 +397,15 @@ UIView *_accView;           // buttons view wrapper
         [tempArray addObject:b];
     }
     self.buttons = tempArray;
-
+    
     NSMutableArray *constraints = [NSMutableArray array];
     NSString *itemS;        // tag of the current button
     NSString *firstItemS;   // tag of the first button
-
+    
     if (stacked) {
         // When stacked, it's easy. Each button is the width of the hud minus the padding
         // and each button is aligned below the previous one, where the last is just above the bottom
-
+        
         NSMutableString *dynamicConstraint = [NSMutableString stringWithString:@"V:|"];
         NSMutableDictionary *viewsDict = [NSMutableDictionary dictionary];
         
@@ -417,7 +421,7 @@ UIView *_accView;           // buttons view wrapper
             if (i == 0) {
                 firstItemS = itemS;
                 [dynamicConstraint appendFormat:@"[%@(==buttonHeight@1000)]", itemS];
-
+                
             } else {
                 [dynamicConstraint appendFormat:@"-10-[%@(==%@)]", itemS, firstItemS];
             }
@@ -468,10 +472,20 @@ UIView *_accView;           // buttons view wrapper
     _view.completionBlock = completionBlock;
 }
 
+- (void)showInView:(UIView *)view {
+    self.parentView = view;
+    [self show];
+}
+
 - (void)show {
+    if (_view.superview) {
+        [self dismiss];
+    }
     if (!self.parentView) {
         self.parentView = [[self class] win];
     }
+    NSAssert(self.parentView != nil, @"HUD parent view is nil!");
+    
     _view.frame = self.parentView.bounds;
     [self.parentView addSubview:_view];
     // Center the _view inside the parentView, so that autorotation is properly handled
@@ -492,21 +506,21 @@ UIView *_accView;           // buttons view wrapper
                                       constraintsWithVisualFormat:@"|[item(==wrapper)]|"
                                       options:NSLayoutFormatAlignAllCenterY
                                       metrics:nil
-                                      views:@{@"item": _view, @"wrapper": self.parentView}]];
+                                      views:@{@"item": _view, @"wrapper": _view.superview}]];
     [constraints addObjectsFromArray:[NSLayoutConstraint
                                       constraintsWithVisualFormat:@"V:|[item(==wrapper)]|"
                                       options:NSLayoutFormatAlignAllCenterX
                                       metrics:nil
-                                      views:@{@"item": _view, @"wrapper": self.parentView}]];
+                                      views:@{@"item": _view, @"wrapper": _view.superview}]];
     [_view.superview addConstraints:constraints];
 }
 
 - (void)dismiss {
-    [_view dismiss];
+    [_view didTapButton:nil];
 }
 
 - (void)dismissAfterInterval:(NSTimeInterval)interval {
-    [_view performSelector:@selector(dismiss) withObject:nil afterDelay:interval];
+    [_view performSelector:@selector(didTapButton:) withObject:nil afterDelay:interval];
 }
 
 @end

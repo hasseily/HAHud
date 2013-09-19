@@ -6,27 +6,28 @@
 //
 /*
  @abstract:
-    Provides a configurable alert hud with multiple display options
-    The hud will have a message and optionally any of:
-        - An activity indicator
-        - A check or "x"
-        - A progress indicator
-        - Buttons side by side or stacked vertically
+ Provides a configurable alert hud with multiple display options
+ The hud will have a message and optionally any of:
+ - An activity indicator
+ - A check or "x"
+ - A progress indicator
+ - Buttons side by side or stacked vertically
  
-    Important properties are:
-        - parentView: the view on which the hud will display (defaults to the window)
-        - message: the message UILabel
-        - activityIndicator: it is automatically on as the view is shown
-        - progressView: set progress directly on it
-    
-    Use setCompletion: to assign a callback which will trigger when a button is pressed
-    
-    Use isHudDisplayedInView: to check if there's a hud showing on parentView.
-    If you pass in nil, then the window is checked.
+ Important properties are:
+ - parentView: the view on which the hud will display (defaults to the window)
+ - message: the message UILabel
+ - activityIndicator: it is automatically on as the view is shown
+ - progressView: set progress directly on it
  
-    NOTE:   if the parentView is the default window, then the hud won't properly autorotate.
-            Use your view controller's main view whenever you can.
-*/
+ Use setCompletion: to assign a callback which will trigger when the hud is dismissed.
+ If a button was pressed, then the button index is passed in, otherwise 0.
+ 
+ Use isHudDisplayedInView: to check if there's a hud showing on parentView.
+ If you pass in nil, then the window is checked.
+ 
+ NOTE:   if the parentView is the default window, then the hud won't properly autorotate.
+ Use your view controller's main view whenever you can.
+ */
 
 #import <UIKit/UIKit.h>
 
@@ -49,8 +50,9 @@
 + (BOOL)isHudDisplayedInView:(UIView *)parentView;
 
 // Show the hud
-- (void)show;
-// Dismiss the hud
+- (void)show;                           // shows in window or self.parentView
+- (void)showInView:(UIView *)view;      // shortcut to set parentView and show
+                                        // Dismiss the hud
 - (void)dismiss;
 // Dismiss the hud after interval seconds
 - (void)dismissAfterInterval:(NSTimeInterval)interval;
