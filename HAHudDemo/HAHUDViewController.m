@@ -16,7 +16,7 @@
 @implementation HAHUDViewController
 
 - (IBAction)didTouchButton:(UIButton *)sender {
-    NSString *msg = @"This is a demo of HAHud.\n\nThanks for trying it out.";
+    NSString *msg = @"This is a demo of HAHud where the messages can be very long. Be careful with the screen size!\n\nThanks for trying it out.";
     HAHud *hud;
     switch (sender.tag) {
         case 11:
